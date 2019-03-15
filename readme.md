@@ -10,5 +10,11 @@
 - 注册，用户名为空，密码为空，用户名已被使用，插入数据库
 - 检测是否管理员登录，读者登录
 
+- login
+- logout
+- register
+- index
+- errorhandler(404)
+
 
 
