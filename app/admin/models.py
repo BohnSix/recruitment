@@ -11,7 +11,7 @@ from recruitment.app.models import Admin
 
 
 class LoginForm(FlaskForm):
-    s_id = StringField(
+    account = StringField(
         label="学号",
         validators=[DataRequired("请输入学号！")],
         description="请输入学号！",

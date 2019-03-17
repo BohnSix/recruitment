@@ -7,3 +7,5 @@ views 安排路由
 from flask import Blueprint
 
 home = Blueprint("home", __name__)
+
+from . import views
