@@ -7,6 +7,8 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired, ValidationError
 
+from recruitment.app.models import Admin
+
 
 class LoginForm(FlaskForm):
     s_id = StringField(
