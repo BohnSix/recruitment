@@ -15,16 +15,23 @@ class Admin(db.model):
         return check_password_hash(self.pswd, pswd)
 
 
+class Super(Admin):
+    __tablename__ = "super"
+
+    def __repr__(self):
+        return "<Super %r>" % self.name
+
+    def check_pswd(self, pswd):
+        from werkzeug.security import check_password_hash
+        return check_password_hash(self.pswd, pswd)
+
+
 class User(db.model):
     __tablename__ = "user"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     s_id = db.Column(db.String(32), unique=True, index=True)
-    logo = db.Column(db.String(255), unique=True)
-
     name = db.Column(db.String(32), index=True)
     pswd = db.Column(db.String(32))
-    email = db.Column(db.String(100), unique=True, index=True)
-    phone = db.Column(db.String(11), unique=True, index=True)
 
     create_time = db.Column(db.DateTime)
     update_time = db.Column(db.DateTime)
@@ -43,3 +50,16 @@ class UserInfo(db.Model):
     __tablename__ = "userinfo"
     user_id = db.Column(db.String(32), db.ForeignKey('user.id'))
     sex = db.Column(db.String(10), )
+    logo = db.Column(db.String(255), unique=True)
+
+    department = db.Column(db.String(11), index=True)
+    department2 = db.Column(db.String(11), index=True)
+    intro = db.Column(db.Text)
+    school = db.Column(db.String(11), index=True)
+    classnum = db.Column(db.String(11), index=True)
+
+    email = db.Column(db.String(100), unique=True, index=True)
+    phone = db.Column(db.String(11), unique=True, index=True)
+
+    first_impression = db.Column(db.Text)
+    second_impression = db.Column(db.Text)

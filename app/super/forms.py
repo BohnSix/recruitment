@@ -1,13 +1,6 @@
-'''
-登陆表单
-username, password
-'''
-
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired, ValidationError
-
-from recruitment.app.models import Admin
 
 
 class LoginForm(FlaskForm):
@@ -35,6 +28,3 @@ class LoginForm(FlaskForm):
             "class": "btn btn-primary btn-block btn-flat"
         }
     )
-
-    def validate_account(self, field):
-        pass
