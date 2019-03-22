@@ -14,7 +14,7 @@ def admin_login_req():
 
 
 @admin.route('/')
-@admin_login_req()
+# @admin_login_req
 def index():
     return render_template("index.html")
 

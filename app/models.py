@@ -1,9 +1,9 @@
-from recruitment.app.init import db
+from recruitment.app.exts import db
 
 
-class Admin(db.model):
+class Admin(db.Model):
     __tablename__ = "admin"
-    id = db.Column(db.Integer, autoincrement=True)
+    id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     name = db.Column(db.String(32), unique=True)
     pswd = db.Column(db.String(32))
 
@@ -26,7 +26,7 @@ class Super(Admin):
         return check_password_hash(self.pswd, pswd)
 
 
-class User(db.model):
+class User(db.Model):
     __tablename__ = "user"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     s_id = db.Column(db.String(32), unique=True, index=True)
@@ -48,7 +48,7 @@ class User(db.model):
 
 class UserInfo(db.Model):
     __tablename__ = "userinfo"
-    user_id = db.Column(db.String(32), db.ForeignKey('user.id'))
+    user_id = db.Column(db.String(32), db.ForeignKey('user.id'), primary_key=True)
     sex = db.Column(db.String(10), )
     logo = db.Column(db.String(255), unique=True)
 
