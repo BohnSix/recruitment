@@ -20,7 +20,6 @@ def user_login_req(f):
 
 @home.route("/")
 def index():
-
     return render_template("home/index.html")
 
 
@@ -54,35 +53,32 @@ def logout():
 @home.route("/register/", methods=["GET", "POST"])
 def register():
     form = RegisterForm()
-    try:
-        if form.validate_on_submit():
-            data = form.data
-            account = User.query.fliter_by(name=data["s_id"]).count()
-            if account != 0:
-                error = "账号已存在，请勿重复注册"
-                flash(error)
-                return redirect(url_for("home.index"))
-            user = User(
-                s_id=data["s_id"],
-                name=data["name"],
-                pswd=data["pswd"],
-                email=data["email"],
-                phone=data["phone"],
-                logo=data["logo"],
-                sex=data["sex"],
-                school=data["school"],
-                department=data["department"],
-                department2=data["department2"],
-                intro=data["intro"],
-                classnum=data["classnum"]
-            )
-            db.session.add(user)
-            db.session.commit()
-            flash("注册成功", "OK")
-            return redirect(url_for("home.login"))
-        return render_template("home/register.html", form=form)
-    except Exception as e:
-        print(e)
+    if form.validate_on_submit():
+        data = form.data
+        account = User.query.fliter_by(name=data["s_id"]).count()
+        if account != 0:
+            error = "账号已存在，请勿重复注册"
+            flash(error)
+            return redirect(url_for("home.index"))
+        user = User(
+            s_id=data["s_id"],
+            name=data["name"],
+            pswd=data["pswd"],
+            email=data["email"],
+            phone=data["phone"],
+            logo=data["logo"],
+            sex=data["sex"],
+            school=data["school"],
+            department=data["department"],
+            department2=data["department2"],
+            intro=data["intro"],
+            classnum=data["classnum"]
+        )
+        db.session.add(user)
+        db.session.commit()
+        flash("注册成功", "OK")
+        return redirect(url_for("home.login"))
+    return render_template("home/register.html", form=form)
 
 
 @user_login_req
@@ -90,3 +86,8 @@ def register():
 def userInfo():
     user = User.query.fliter_by(s_id=session["account"]).first()
     return render_template("userInfo.html", user=user)
+
+
+@home.errorhandler(404)
+def page_not_found():
+    return render_template("home/404.html"), 404

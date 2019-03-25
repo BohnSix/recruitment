@@ -49,12 +49,12 @@ class RegisterForm(FlaskForm):
         }
     )
     name = StringField(
-        label="邮箱",
-        validators=[DataRequired("请输入邮箱！")],
-        description="请输入邮箱！",
+        label="姓名",
+        validators=[DataRequired("我想知道你的名字哎！")],
+        description="Tell me your name！",
         render_kw={
             "class": "form-control",
-            "placeholder": "请输入邮箱！"
+            "placeholder": "your name?"
         }
     )
     pswd = PasswordField(
@@ -97,7 +97,13 @@ class RegisterForm(FlaskForm):
             "placeholder": "请输入性别！"
         }
     )
-    school = SelectField()
+    school = SelectField("这是什么呀", choices=[('01', '通信工程学院'),
+                                           ('02', '电子信息工程学院'),
+                                           ('03', '计算机科学与技术学院'),
+                                           ('04', '机电工程学院'),
+                                           ('05', '五元'),
+                                           ('06', '经济与管理学院'),
+                                           ('07', '七元')])
     department = StringField(
         label="第一志愿",
         validators=[DataRequired("请输入第一志愿部门！")],
