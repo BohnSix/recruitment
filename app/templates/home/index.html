@@ -1,67 +1,154 @@
 {% extends "bootstrap/base.html" %}
 
 {% block title %}
-    Testing
+Testing
 {% endblock %}
 {% block content %}
 <nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">Brand</a>
-    </div>
-
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-        <li><a href="/sss">PageNotFound</a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">Separated link</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">One more separated link</a></li>
-          </ul>
-        </li>
-      </ul>
-      <form class="navbar-form navbar-left">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Brand</a>
         </div>
-        <button type="submit" class="btn btn-default">Submit</button>
-      </form>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="/login/">登陆</a></li>
-        <li><a href="/register/">注册</a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">Separated link</a></li>
-          </ul>
-        </li>
-      </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+                <li><a href="/sss">PageNotFound</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">Dropdown <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">One more separated link</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <form class="navbar-form navbar-left">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Search">
+                </div>
+                <button type="submit" class="btn btn-default">Submit</button>
+            </form>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/login/">登陆</a></li>
+                <li><a href="/register/">注册</a></li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
 </nav>
-    <p>Tesing</p>
-    <p>Tesing</p>
-    <p>Tesing</p>
-    <p>Tesing</p>
-    <p>Tesing</p>
-    <p>Tesing</p>
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for mess in messages %}
+            <h1 style="color: red">{{ mess }}</h1>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+<pre>
+
+
+                                                                         EWW
+                                                                      iWWWWW
+                                                                     WWWWWWi
+                                                                   ;WWWWWWW
+                                                                 W,,iWWWWW
+                                                               t,,,,,WWWWK
+                                                              W,,,,,,WWWW
+fWWW                                                         D,,,,,,,WWW,
+ WWWWWWK                                                   .,,,,,,,,,WWW
+ EWWWWWW,D                                                .,,,,,,,,,,WW
+  WWWWWW,,,,W                                            K,,,,,,,,,,,W
+   WWWWW,,,,,,j                                         E,,,,,,,,,,,,
+   WWWWW,,,,,,,;                                       :,,,,,,,,,,,,E
+    WWWW,,,,,,,,,f                                    :,,,,,,,,,,,,E
+     WWW,,,,,,,,,,,f                                 .,,,,,,,,,,,,W
+      WW,,,,,,,,,,,,,                                ,,,,,,,,,,,,#
+       W,,,,,,,,,,,,,,G                             L,,,,,,,,,,;D
+        j,,,,,,,,,,,,,,K           fK;;,,,,,,,fK   K,,,,,,,,,,;W
+         ,,,,,,,,,,,,,,,E       W,,,,,,,,,,,,,,,,:K:,,,,,,,,,iL
+          E,,,,,,,,,,,,,,i    G,,,,,,,,,,,,,,,,,,,,;,,,,,,,,i,                      ;f,L
+           f,,,,,,,,,,,,,,; W,,,,,,,,,,,,,,,,,,,,,,,,,,,,,ij                      j,,,,,#
+             D,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,ij                     E,,,,,,,,D
+              E,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,iD                     K:,,,,,,,,,:.
+                E,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,j                    f,,,,,,,,,,,,,;
+                  Wi,,,,;,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,.                 E,,,,,,,,,,,,,,,,K
+                    D;ii,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,G               ,,,,,,,,,,,,,,,,,,,,
+                       t,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,             ,,,,,,,,,,,,,,,,,,,,,,;
+                       ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,           t,,,,,,,,,,,,,,,,,,,,,,,W
+                       ,,,,,,,,,,,,,,,,,,,,,,,,,WWWK,,,,,E         G,,,,,,,,,,,,,,,,,,,,,,,,,,
+                      G,,,,,,,,,,,,,,,,,,,,,,,,W  WWW,,,,G       #,,,,,,,,,,,,,,,,,,,,,,,,,,,,G
+                      W,,,,,,,,,,,,,,,,,,,,,,,jE  WWW,,,,,     :,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,.
+                      K,,,,WW. W,,,,,,,,,,,,,,WWE#WWW,,,,:    ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+                      K,,,iW#  W;,,,,,,,,,,,,,iWWWWWW,,,,,  E:,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,E
+                      K,,,WWW  WW,,,,,,,,,,,,,,WWWWWG,,,,,G;,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,;
+                      W,,,WWWWWWW,,,,,,,,,,,,,,,WWW,,,,,,,t,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,W
+                      G,,,WWWWWWE,,,,,,W;,,,,,,,,,,,,,,,,,,,,,,,,,K:,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+                      j,,,,WWWWW,,,,,,,,,,,,,,,,,,,,,WfffL;D,,,:,;,f,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,K
+                      j,,,,,WWW,,,,,,,,,,,,,,,j,,,,,Dfffffjj,,,W,,,,,WL,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+                      j,,,,,,,,,,,,,,,,DEEDWWE,,,,,,fffffffDii#,,,,,,,iiiiiiiiiiiiii;;,,,,,,,,,,,,,f
+                      K,,,,,,,,,,,jjtKEEEEEEEW,,,,,,fffffffGiK,,,,,,,,,iiiiiiiiiiiiiiiiiiiiiiii;tE
+                      K,fW#,,,,,,,,EEEEEEWWDEW,,,,,,fffffffD;,,,,,,,,,#iiiiiiiiiiiiiiiiiiiii#i
+                      iLffff,,,,,,,GEELGGGGGG#,,,,,,fffffffi,,,,,,,,,,iiiiiiiiiiiiiiiii;DL
+                      Wffffff,,,,,,,EGGGGGGGGj,,,,,,ifffffi,,,,,,,,,,,iiiiiiiiiiiiiifD
+                      ffffffft,,,,,,#GGGGGGGG,,,,,,,,,Lffi,,,,,,,,,,,#iiiiiiiii;Ki
+                      fffffffK,,,,,,,GLjjtjtt,,,,,,,,,,,G,,,,,,,,,,,,iiiiiiiDf
+                      Effffffj,,,,,,,Gttttttj,,,,,,,,,,E,,,,,,,,,,,,;iiiLG
+                       fffffj,,,,,,,,,jtttttL,,,,,,,,,t,,,,,,,,,,,,,GD.
+                       .ffff,,,,,,,,,,jjtttj,,,,,,,,,,,,,,,,,,,,,,,,
+                         ;,,,,,,,,,,,,,WtjtW,,,,,,,,,G,,,,,,,,,,,,,E
+                          ;,,,,,,,,,,,,,;EE,,,,,,,,,t,,,,,,,,,,,,,,iL
+                           D,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Kii
+                            i,,,,,,,,,,,,,,,,,,,,,,K,,,,,,,,,,,,,jiiii
+                            #,K,,,,,,,,,,,,,,,,,,,,:,,,,,,,,,,,,,iiiiiK
+                            ,,,i,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Wiiiiiii
+                            ,,,,,,,,,,,,,,,iii;,,,,,,,,,,,,,,,,,iiiiiii;
+                           L,,,,,,,,,,,iiiiiii,,,,,,,,,,,,,,,,, iiiiiiii#
+                           L,,,,,,,,,,,,,iii,,,,,,,,,,,,,,,,,,:  Liiiiiiii
+                           ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,W  .tiiiiiiii
+                           ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,;E .jiiiiiiiiiiW
+                           ,,,,,,,,,t,,,,,,,,,,,,,,,,,,,,,iKE#iiiiiiiiiiiiK
+                          .,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,iEijiiiiiiiiiiL,
+                          f,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,;ii,iiiiiii;W
+                          j,,,,,,,,,,;,,,,,,,,,,,,,,,,,,,,;;,iiiii;j
+                          j,,,,,,,,,,K,,,,,,,,,,,,,,,,,,,,,,,Wiit
+                          ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,iiiiK
+                           ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,iittK
+                           ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,iGGDG
+                           ,,,,,,,,,,,i,,,,,,,,,,,,,,,,,,,,,,,WtGGGG
+                           f,,,,,,,,,,G,,,,,,,,,,,,,,,,,,,,,,,; GGGGG
+                           D,,,,,,,,,,W,,,,,,,,,,,,,,,,,,,,,,,,DGGGGGW
+                         D,,,,,,,,,,,,W,,,,,,,,,,,,,,#WEWW,,,,,DGGGGE
+                    #L: D,,,,,,,,,,,,,K,,,,,,,,,,,,D,,,i,,,;,,,GGGGj
+                    WW, ,,,,E,,,,,,,,,f,,,,,,,,,,,K,,G;,,;,,,,,,GK
+                    ,;,D,,,,;,,,,,,,,,D,,,,,,,,,,K,,,,W,,,,,,,,,
+                    fii,D,,,,t,,,,,,,,,,,,,,,,,,f,,,E,if,,,,,,,,
+                    WWii,,,,,,f,,,,,,i,,,,,,,,,,,,,,,iii,,,,,,,,
+                     iiiiG,,,,D,,,tEi,,,,,,,,,,,,,,,iiii,,,,,,,,;
+                     iiii,,,,,,,;i,,,,,,,,,,,,,,,,,#iiiiE,,,,,,,;
+                     #iiii#,,,,,,,,,,,,,,,,,,,,,,,,;iiiiE,,,,,,,
+                      iiii;,,,,,,,,,,iiiiiii,,,,,;iiiiiiii,,,,,,
+                      Giiiit,,,,,;iiiiiiiiiiiiiiiiiiiiiiii;,,,,:
+                       iiiiii;iiiiiiiiiiiiiiiiiiiijiiiifiiii,,,W
+                       fiiiiiiiiiiiiiiiiiiiiiiiiiiWiiiiDiiiiii;
+                        iiiiiiiiiiiiiiiiiiiiiiiiiiKiiii;iiiiiit
+                        KiiiiiiiiiiiiiiiiiiiiiiiiiGiiitiiiiii:
+                         EiiifiiiiiiiiiiiifLfjiiiiGiiijiiiiK
+                          ;iiKiiii;f#L           WKiitiDW
+                           jiW                    Lii.
+                            ;                      Ej
+
+</pre>
 {% endblock %}

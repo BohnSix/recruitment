@@ -1,3 +1,5 @@
+import datetime
+
 from recruitment.app.exts import db
 
 
@@ -33,8 +35,8 @@ class User(db.Model):
     name = db.Column(db.String(32), index=True)
     pswd = db.Column(db.String(32))
 
-    create_time = db.Column(db.DateTime)
-    update_time = db.Column(db.DateTime)
+    create_time = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+    update_time = db.Column(db.DateTime, default=datetime.datetime.utcnow)
 
     userinfo = db.relationship("UserInfo", backref="user")
 
@@ -48,10 +50,10 @@ class User(db.Model):
 
 class UserInfo(db.Model):
     __tablename__ = "userinfo"
-    user_id = db.Column(db.String(32), db.ForeignKey('user.id'), primary_key=True)
-    sex = db.Column(db.String(10), )
+    user_id = db.Column(db.String(32), db.ForeignKey('user.s_id'), primary_key=True)
+    name = db.Column(db.String(32), index=True)
+    sex = db.Column(db.String(10))
     logo = db.Column(db.String(255), unique=True)
-
     department = db.Column(db.String(11), index=True)
     department2 = db.Column(db.String(11), index=True)
     intro = db.Column(db.Text)

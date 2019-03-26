@@ -1,3 +1,4 @@
+import time
 from functools import wraps
 
 from flask import flash, redirect, url_for, session, render_template, request
@@ -5,7 +6,7 @@ from flask import flash, redirect, url_for, session, render_template, request
 from recruitment.app.home.init import home
 from recruitment.app.home.forms import LoginForm, RegisterForm
 from recruitment.app.init import db
-from recruitment.app.models import User
+from recruitment.app.models import User, UserInfo
 
 
 def user_login_req(f):
@@ -29,15 +30,15 @@ def login():
     error = ""
     if form.validate_on_submit():
         data = form.data
-        account = User.query.fliter_by(name=data["account"]).first() or None
+        account = User.query.filter_by(s_id=data["account"]).first() or None
         if not account:
             error = "账号不存在"
             flash(error)
-            return redirect(url_for("home.login"), error=error)
+            return redirect(url_for("home.login", error=error))
         if not account.check_pswd(data["pswd"]):
             error = "密码错误"
             flash(error)
-            return redirect(url_for("home.login"), error=error)
+            return redirect(url_for("home.login", error=error))
         session["account"] = data.account
     return render_template("home/login.html", form=form, error=error)
 
@@ -53,21 +54,26 @@ def logout():
 @home.route("/register/", methods=["GET", "POST"])
 def register():
     form = RegisterForm()
+    error = ""
     if form.validate_on_submit():
         data = form.data
-        account = User.query.fliter_by(name=data["s_id"]).count()
+        account = User.query.filter_by(s_id=data["s_id"]).count()
         if account != 0:
             error = "账号已存在，请勿重复注册"
             flash(error)
-            return redirect(url_for("home.index"))
+            return redirect(url_for("home.index", error=error))
         user = User(
             s_id=data["s_id"],
             name=data["name"],
             pswd=data["pswd"],
+        )
+        userinfo = UserInfo(
+            user_id=data["s_id"],
+            name=data["name"],
+            sex=data["sex"],
+            logo=data["logo"],
             email=data["email"],
             phone=data["phone"],
-            logo=data["logo"],
-            sex=data["sex"],
             school=data["school"],
             department=data["department"],
             department2=data["department2"],
@@ -75,6 +81,7 @@ def register():
             classnum=data["classnum"]
         )
         db.session.add(user)
+        db.session.add(userinfo)
         db.session.commit()
         flash("注册成功", "OK")
         return redirect(url_for("home.login"))
@@ -89,5 +96,5 @@ def userInfo():
 
 
 @home.errorhandler(404)
-def page_not_found():
+def page_not_found(error):
     return render_template("home/404.html"), 404
