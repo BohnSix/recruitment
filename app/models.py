@@ -33,7 +33,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     s_id = db.Column(db.String(32), unique=True, index=True)
     name = db.Column(db.String(32), index=True)
-    pswd = db.Column(db.String(32))
+    pswd = db.Column(db.String(255))
 
     create_time = db.Column(db.DateTime, default=datetime.datetime.utcnow)
     update_time = db.Column(db.DateTime, default=datetime.datetime.utcnow)
@@ -42,6 +42,10 @@ class User(db.Model):
 
     def __repr__(self):
         return "<User %r>" % self.name
+    
+    def set_pswd(self, pswd):
+        from werkzeug.security import generate_password_hash
+        self.pswd = generate_password_hash(pswd)
 
     def check_pswd(self, pswd):
         from werkzeug.security import check_password_hash

@@ -2,11 +2,16 @@ from flask import render_template, flash, redirect, url_for, session
 
 from recruitment.app.admin.init import admin
 from recruitment.app.admin.forms import LoginForm
-from recruitment.app.models import Admin
+from recruitment.app.models import Admin, User
 
 
-def change_password():
-    pass
+def change_password(user_id, pswd):
+    user = User.query.filter_by(s_id=user_id).first() or None
+    if user:
+        user.set_pswd(pswd)
+        flash("密码修改成功")
+    else:
+        flash("用户不存在")
 
 
 def admin_login_req():

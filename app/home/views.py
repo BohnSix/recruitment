@@ -1,7 +1,6 @@
-import time
 from functools import wraps
 
-from flask import flash, redirect, url_for, session, render_template, request
+from flask import flash, redirect, url_for, session, render_template
 
 from recruitment.app.home.init import home
 from recruitment.app.home.forms import LoginForm, RegisterForm
@@ -13,7 +12,8 @@ def user_login_req(f):
     @wraps(f)
     def decorate_function(*args, **kwargs):
         if "account" not in session:
-            return redirect(url_for("home.login", next=request.url))
+            flash("你还没有登陆呢！")
+            return redirect(url_for("home.login"))
         return f(*args, **kwargs)
 
     return decorate_function
@@ -27,24 +27,25 @@ def index():
 @home.route('/login/', methods=["GET", "POST"])
 def login():
     form = LoginForm()
-    error = ""
+    session["account"] = None
     if form.validate_on_submit():
         data = form.data
         account = User.query.filter_by(s_id=data["account"]).first() or None
         if not account:
-            error = "账号不存在"
-            flash(error)
-            return redirect(url_for("home.login", error=error))
+            flash("账号不存在")
+            return redirect(url_for("home.login"))
         if not account.check_pswd(data["pswd"]):
-            error = "密码错误"
-            flash(error)
-            return redirect(url_for("home.login", error=error))
-        session["account"] = data.account
-    return render_template("home/login.html", form=form, error=error)
+            flash("密码错误")
+            return redirect(url_for("home.login"))
+        session["account"] = data["account"]
+        user = account
+        flash("欢迎回来， %s" % account.name)
+        return render_template("home/index.html", form=form, user=user)
+    return render_template("home/login.html", form=form)
 
 
 @user_login_req
-@home.route("/logout")
+@home.route("/logout/")
 def logout():
     session.pop("account", None)
     print(session)
@@ -54,19 +55,18 @@ def logout():
 @home.route("/register/", methods=["GET", "POST"])
 def register():
     form = RegisterForm()
-    error = ""
     if form.validate_on_submit():
         data = form.data
         account = User.query.filter_by(s_id=data["s_id"]).count()
         if account != 0:
-            error = "账号已存在，请勿重复注册"
-            flash(error)
-            return redirect(url_for("home.index", error=error))
+            messages = "账号已存在，请勿重复注册"
+            flash(messages)
+            return redirect(url_for("home.index", messages=messages))
         user = User(
             s_id=data["s_id"],
-            name=data["name"],
-            pswd=data["pswd"],
+            name=data["name"]
         )
+        user.set_pswd(data["pswd"])
         userinfo = UserInfo(
             user_id=data["s_id"],
             name=data["name"],
@@ -83,18 +83,15 @@ def register():
         db.session.add(user)
         db.session.add(userinfo)
         db.session.commit()
-        flash("注册成功", "OK")
-        return redirect(url_for("home.login"))
+        messages = "注册成功"
+        flash(messages)
+        return redirect(url_for("home.login", messages=messages))
     return render_template("home/register.html", form=form)
 
 
 @user_login_req
-@home.route("/userInfo/")
+@home.route("/userinfo/")
 def userInfo():
-    user = User.query.fliter_by(s_id=session["account"]).first()
-    return render_template("userInfo.html", user=user)
+    user = UserInfo.query.filter_by(user_id=session["account"]).first() or None
 
-
-@home.errorhandler(404)
-def page_not_found(error):
-    return render_template("home/404.html"), 404
+    return render_template("home/userinfo.html", user=user)

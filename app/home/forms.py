@@ -30,7 +30,7 @@ class LoginForm(FlaskForm):
 
 class RegisterForm(FlaskForm):
     s_id = StringField(
-        label="学号",
+        label="*学号",
         validators=[DataRequired()],
         render_kw={
             "class": "form-control",
@@ -38,23 +38,23 @@ class RegisterForm(FlaskForm):
         }
     )
     name = StringField(
-        label="姓名",
+        label="*姓名",
         validators=[DataRequired()],
         render_kw={
             "class": "form-control",
-            "placeholder": "your name?"
+            "placeholder": "喊出我的名字"
         }
     )
     pswd = PasswordField(
-        label="密码",
+        label="*密码",
         validators=[DataRequired()],
         render_kw={
             "class": "form-control",
-            "placeholder": "请输入密码"
+            "placeholder": "请输入密码并记住它"
         }
     )
     email = StringField(
-        label="邮箱",
+        label="*邮箱",
         validators=[DataRequired()],
         render_kw={
             "class": "form-control",
@@ -62,7 +62,7 @@ class RegisterForm(FlaskForm):
         }
     )
     phone = StringField(
-        label="手机号码",
+        label="*手机号码",
         validators=[DataRequired()],
         render_kw={
             "class": "form-control",
@@ -70,18 +70,13 @@ class RegisterForm(FlaskForm):
         }
     )
 
-    # ---------------------------------------------------
-    logo = StringField(label="头像")
-
-    sex = StringField(
-        label="性别",
+    sex = SelectField(
+        label="*性别",
         validators=[DataRequired()],
-        render_kw={
-            "class": "form-control",
-            "placeholder": "请输入性别！"
-        }
+        choices=[("男", "男"), ("女", "女")]
     )
-    school = SelectField(label="学院",
+    school = SelectField(label="*学院",
+                         validators=[DataRequired()],
                          choices=[('通信工程学院', '通信工程学院'),
                                   ('电子工程学院', '电子工程学院'),
                                   ('计算机科学与技术学院', '计算机科学与技术学院'),
@@ -95,9 +90,10 @@ class RegisterForm(FlaskForm):
                                   ('网络与信息安全学院', '网络与信息安全学院'),
                                   ('人工智能学院', '人工智能学院'),
                                   ('马克思主义学院', '马克思主义学院'),
+                                  ('外国语学院', '外国语学院'),
                                   ('人文学院', '人文学院')])
     department = StringField(
-        label="第一志愿部门",
+        label="*第一志愿部门",
         validators=[DataRequired()],
         render_kw={
             "class": "form-control",
@@ -108,22 +104,21 @@ class RegisterForm(FlaskForm):
         label="第二志愿部门",
         render_kw={
             "class": "form-control",
-            "placeholder": "请输入第二志愿部门！"
+            "placeholder": "请输入第二志愿部门，可不填！"
         }
     )
 
     intro = TextAreaField(
-        label="自我介绍",
+        label="*自我介绍",
         validators=[DataRequired()],
         render_kw={
             "class": "form-control",
             "placeholder": "出众的自我介绍能让学长学姐们更好的认识你们哦！"
         }
     )
-    # ---------------------------------------------------
 
     classnum = StringField(
-        label="班级",
+        label="*班级",
         validators=[DataRequired()],
         render_kw={
             "class": "form-control",
@@ -131,9 +126,3 @@ class RegisterForm(FlaskForm):
         }
     )
     submit = SubmitField("注册")
-
-
-class TestForm(FlaskForm):
-    field1 = StringField("随便写一下什么")
-    field2 = StringField("随便写一下什么")
-    field3 = SubmitField("Submit")

@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 from flask_bootstrap import Bootstrap
 from flask_script import Manager
 
@@ -6,7 +6,6 @@ from recruitment.app.exts import db
 
 from recruitment.app.admin.init import admin
 from recruitment.app.home.init import home
-from recruitment.app.home.views import page_not_found
 
 
 def create_app():
@@ -28,5 +27,9 @@ app.app_context().push()
 
 bootstrap = Bootstrap(app)
 
-
 manager = Manager(app)
+
+
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template("home/404.html"), 404
