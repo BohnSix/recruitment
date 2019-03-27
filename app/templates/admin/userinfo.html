@@ -1,0 +1,66 @@
+{% extends "bootstrap/base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block content %}
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for mess in messages %}
+            <h1 style="color: red">{{ mess }}</h1>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+{% if userinfo %}
+<table class="table">
+    <tbody>
+    <tr>
+        <td>姓名</td>
+        <td>{{ userinfo.name }}</td>
+    </tr>
+    <tr>
+        <td>学号</td>
+        <td>{{ userinfo.user_id }}</td>
+    </tr>
+    <tr>
+        <td>性别</td>
+        <td>{{ userinfo.sex }}</td>
+    </tr>
+    <tr>
+        <td>学院</td>
+        <td>{{ userinfo.school }}</td>
+    </tr>
+    <tr>
+        <td>班级</td>
+        <td>{{ userinfo.classnum }}</td>
+    </tr>
+    <tr>
+        <td>第一志愿</td>
+        <td>{{ userinfo.department }}</td>
+    </tr>
+    <tr>
+        <td>第二志愿</td>
+        <td>{{ userinfo.department2 }}</td>
+    </tr>
+    <tr>
+        <td>邮箱</td>
+        <td>{{ userinfo.email }}</td>
+    </tr>
+    <tr>
+        <td>电话</td>
+        <td>{{ userinfo.phone }}</td>
+    </tr>
+    <tr>
+        <td>自我介绍</td>
+        <td>{{ userinfo.intro }}</td>
+    </tr>
+
+    </tbody>
+</table>
+<hr>
+<form method="POST">
+    {{ wtf.quick_form(form) }}
+</form>
+{% endif %}
+
+
+{% endblock %}

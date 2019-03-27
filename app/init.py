@@ -14,7 +14,7 @@ def create_app():
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
     app.config['DEBUG'] = True
     app.config['SECRET_KEY'] = "a hard to guess string"
-    app.register_blueprint(admin)
+    app.register_blueprint(admin, url_prefix='/admin')
     app.register_blueprint(home)
 
     db.init_app(app)

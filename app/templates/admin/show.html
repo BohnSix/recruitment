@@ -1,0 +1,35 @@
+{% extends "bootstrap/base.html" %}
+
+{% block content %}
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for mess in messages %}
+            <h1 style="color: red">{{ mess }}</h1>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+<table class="table">
+    <tbody>
+    <tr>
+        <th>姓名</th>
+        <th>学号</th>
+        <th>学院</th>
+    </tr>
+    {% if users %}
+    {% for user in users %}
+    <tr>
+        <td><a href="/userinfo/{{user.user_id}}">{{ user.name }}</a></td>
+        <td>{{ user.user_id }}</td>
+        <td>{{ user.school }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% else %}
+    </tbody>
+</table>
+    <h1 style="color: red">I have nothing to show</h1>
+{% endif %}
+
+{% endblock %}

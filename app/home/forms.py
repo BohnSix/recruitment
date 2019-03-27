@@ -92,21 +92,22 @@ class RegisterForm(FlaskForm):
                                   ('马克思主义学院', '马克思主义学院'),
                                   ('外国语学院', '外国语学院'),
                                   ('人文学院', '人文学院')])
-    department = StringField(
-        label="*第一志愿部门",
-        validators=[DataRequired()],
-        render_kw={
-            "class": "form-control",
-            "placeholder": "请输入第一志愿部门！"
-        }
-    )
-    department2 = StringField(
-        label="第二志愿部门",
-        render_kw={
-            "class": "form-control",
-            "placeholder": "请输入第二志愿部门，可不填！"
-        }
-    )
+    department = SelectField(label="*第一志愿部门",
+                             validators=[DataRequired()],
+                             choices=[('wailian', '外联部'),
+                                      ('bangongshi', '办公室'),
+                                      ('mishu', '秘书部'),
+                                      ('tiyu', '体育部'),
+                                      ('chuanmei', '传媒部'),
+                                      ('yinxiangshijue', '印象视觉')])
+    department2 = SelectField(label="*第一志愿部门",
+                              validators=[DataRequired()],
+                              choices=[('wailian', '外联部'),
+                                       ('bangongshi', '办公室'),
+                                       ('mishu', '秘书部'),
+                                       ('tiyu', '体育部'),
+                                       ('chuanmei', '传媒部'),
+                                       ('yinxiangshijue', '印象视觉')])
 
     intro = TextAreaField(
         label="*自我介绍",

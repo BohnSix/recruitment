@@ -49,7 +49,7 @@ def login():
 def logout():
     session.pop("account", None)
     print(session)
-    return redirect(url_for("home.index"))
+    return redirect(url_for("admin.index"))
 
 
 @home.route("/register/", methods=["GET", "POST"])
@@ -71,7 +71,6 @@ def register():
             user_id=data["s_id"],
             name=data["name"],
             sex=data["sex"],
-            logo=data["logo"],
             email=data["email"],
             phone=data["phone"],
             school=data["school"],
