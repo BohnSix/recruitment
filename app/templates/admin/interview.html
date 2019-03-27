@@ -1,0 +1,15 @@
+{% extends "bootstrap/base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block content %}
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for mess in messages %}
+            <h1 style="color: red">{{ mess }}</h1>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+<form method="POST">
+    {{ wtf.quick_form(form) }}
+</form>
+{% endblock %}

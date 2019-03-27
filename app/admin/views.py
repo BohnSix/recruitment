@@ -10,12 +10,23 @@ from recruitment.app.models import Admin, User, UserInfo
 department = {
     "wailian": "外联部",
     "mishu": "秘书部",
+    "xueshu": "学术部",
+    "wenyi": "文艺部",
+    "renshi": "人事部",
+    "tiyu": "体育部",
+    "quanyi": "权益部",
+    "yinxiangshijue": "印象视觉",
+    "shenghuo": "生活部",
+    "guangbozhan": "广播站",
+    "jijian": "纪检部",
+    "chuanmei": "传媒部",
+    "gongguan": "公关部",
     "bangongshi": "办公室"
 }
 
 
 def change_password(user_id, pswd):
-    user = User.query.filter_by(s_id=user_id).first() or None
+    user = User.query.filter_by(s_id=user_id).first()
     if user:
         user.set_pswd(pswd)
         flash("密码修改成功")
@@ -36,7 +47,7 @@ def admin_login_req(f):
 
 @admin.route('/')
 def index():
-    return render_template("admin/index.html")
+    return render_template("/admin/index.html")
 
 
 @admin.route("/login/", methods=["GET", "POST"])
@@ -44,14 +55,14 @@ def admin_login():
     form = LoginForm()
     if form.validate_on_submit():
         data = form.data
-        admin = Admin.query.filter_by(name=data["account"]).first() or None
+        admin = Admin.query.filter_by(name=data["account"]).first()
         if admin:
             if data["pswd"] != admin.pswd:
                 flash("密码错误!")
                 return redirect(url_for("admin.admin_login"))
-            session["admin"] = data["account"]
+            session["admin"] = admin.name
             return redirect(url_for("admin.index", admin=admin))
-    return render_template("admin/login.html", form=form)
+    return render_template("/admin/login.html", form=form)
 
 
 @admin_login_req
@@ -96,7 +107,7 @@ def add_fresh():
         messages = "注册成功"
         flash(messages)
         return redirect(url_for("admin.login", messages=messages))
-    return render_template("admin/register.html", form=form)
+    return render_template("/admin/register.html", form=form)
 
 
 @admin_login_req
@@ -104,16 +115,35 @@ def add_fresh():
 def show():
     dep = department[session["admin"]]
     users = UserInfo.query.filter_by(department=dep)
-    return render_template("admin/show.html", users=users)
+    return render_template("/admin/show.html", users=users)
 
 
 @admin_login_req
-@admin.route('/userinfo/<int:user_id>', methods=["GET", "POST"])
+@admin.route('/userinfo/<int:user_id>')
 def userinfo(user_id):
     form = InterviewForm()
-    userinfo = UserInfo.query.filter_by(user_id=user_id).first() or None
+    userinfo = UserInfo.query.filter_by(user_id=user_id).first()
     if not userinfo:
         flash("没有找到这个人哦")
         return redirect(url_for("admin.index"))
     print(session)
-    return render_template("admin/userinfo.html", userinfo=userinfo, form=form)
+    return render_template("/admin/userinfo.html", userinfo=userinfo, form=form)
+
+
+@admin_login_req
+@admin.route('/interview/<int:user_id>', methods=["GET", "POST"])
+def interview(user_id):
+    form = InterviewForm()
+    if form.validate_on_submit():
+        data = form.data
+        account = UserInfo.query.filter_by(user_id=user_id).first()
+        if not account:
+            messages = "账号不存在"
+            flash(messages)
+            return redirect(url_for("admin.index", messages=messages))
+        account.first_impression = data["first_impression"]
+        account.second_impression = data["second_impression"]
+
+        db.session.commit()
+        return redirect(url_for("admin.userinfo", user_id=account.user_id))
+    return render_template("/admin/interview.html", form=form)

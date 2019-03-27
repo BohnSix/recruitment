@@ -57,13 +57,12 @@ class UserInfo(db.Model):
     user_id = db.Column(db.String(32), db.ForeignKey('user.s_id'), primary_key=True)
     name = db.Column(db.String(32), index=True)
     sex = db.Column(db.String(10))
-    logo = db.Column(db.String(255), unique=True)
     department = db.Column(db.String(11), index=True)
     department2 = db.Column(db.String(11), index=True)
     intro = db.Column(db.Text)
     school = db.Column(db.String(11), index=True)
     classnum = db.Column(db.String(11), index=True)
-
+    QQ = db.Column(db.String(11), index=True)
     email = db.Column(db.String(100), unique=True, index=True)
     phone = db.Column(db.String(11), unique=True, index=True)
 

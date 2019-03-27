@@ -11,6 +11,7 @@
 <table class="table">
     <tbody>
     <tr>
+        <th>ID</th>
         <th>姓名</th>
         <th>学号</th>
         <th>学院</th>
@@ -18,7 +19,8 @@
     {% if users %}
     {% for user in users %}
     <tr>
-        <td><a href="/userinfo/{{user.user_id}}">{{ user.name }}</a></td>
+        <td>{{ user.id }}</td>
+        <td><a href="/admin/userinfo/{{ user.user_id }}">{{ user.name }}</a></td>
         <td>{{ user.user_id }}</td>
         <td>{{ user.school }}</td>
     </tr>

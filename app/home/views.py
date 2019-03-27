@@ -30,7 +30,7 @@ def login():
     session["account"] = None
     if form.validate_on_submit():
         data = form.data
-        account = User.query.filter_by(s_id=data["account"]).first() or None
+        account = User.query.filter_by(s_id=data["account"]).first()
         if not account:
             flash("账号不存在")
             return redirect(url_for("home.login"))
@@ -91,6 +91,6 @@ def register():
 @user_login_req
 @home.route("/userinfo/")
 def userInfo():
-    user = UserInfo.query.filter_by(user_id=session["account"]).first() or None
+    user = UserInfo.query.filter_by(user_id=session["account"]).first()
 
     return render_template("home/userinfo.html", user=user)
