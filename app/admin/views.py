@@ -1,5 +1,3 @@
-from functools import wraps
-
 from flask import render_template, flash, redirect, url_for, session
 
 from recruitment.app.admin.init import admin
@@ -34,20 +32,20 @@ def change_password(user_id, pswd):
         flash("用户不存在")
 
 
-def admin_login_req(f):
-    @wraps(f)
-    def decorate_function(*args, **kwargs):
-        if "admin" not in session:
-            flash("你还没有登陆呢！")
-            return redirect(url_for("admin.admin_login"))
-        return f(*args, **kwargs)
-
-    return decorate_function
+# def admin_login_req(f):
+#     @wraps(f)
+#     def decorate_function(*args, **kwargs):
+#         if "admin" not in session:
+#             flash("你还没有登陆呢！")
+#             return redirect(url_for("admin.admin_login"))
+#         return f(*args, **kwargs)
+#     return decorate_function
 
 
 @admin.route('/')
 def index():
-    return render_template("/admin/index.html")
+    print(session)
+    return render_template("/admin/index.html", admin_name=department[session['admin']])
 
 
 @admin.route("/login/", methods=["GET", "POST"])
@@ -61,11 +59,12 @@ def admin_login():
                 flash("密码错误!")
                 return redirect(url_for("admin.admin_login"))
             session["admin"] = admin.name
-            return redirect(url_for("admin.index", admin=admin))
+            admin_name = department[admin.name]
+            return redirect(url_for("admin.index", admin_name=admin_name))
+            # return render_template("admin/index.html", admin_name=admin_name)
     return render_template("/admin/login.html", form=form)
 
 
-@admin_login_req
 @admin.route('/logout/')
 def logout():
     session.pop('admin', None)
@@ -73,7 +72,6 @@ def logout():
     return redirect(url_for("admin.index"))
 
 
-@admin_login_req
 @admin.route('/add/', methods=["GET", "POST"])
 def add_fresh():
     form = RegisterForm()
@@ -81,7 +79,7 @@ def add_fresh():
         data = form.data
         account = User.query.filter_by(s_id=data["s_id"]).count()
         if account != 0:
-            messages = "账号已存在，请勿重复注册"
+            messages = "账号已存在"
             flash(messages)
             return redirect(url_for("admin.index", messages=messages))
         user = User(
@@ -106,19 +104,17 @@ def add_fresh():
         db.session.commit()
         messages = "注册成功"
         flash(messages)
-        return redirect(url_for("admin.login", messages=messages))
-    return render_template("/admin/register.html", form=form)
+        return redirect(url_for("admin.index", messages=messages))
+    return render_template("/admin/add.html", form=form)
 
 
-@admin_login_req
 @admin.route('/show/')
 def show():
-    dep = department[session["admin"]]
+    dep = session["admin"]
     users = UserInfo.query.filter_by(department=dep)
     return render_template("/admin/show.html", users=users)
 
 
-@admin_login_req
 @admin.route('/userinfo/<int:user_id>')
 def userinfo(user_id):
     form = InterviewForm()
@@ -130,7 +126,6 @@ def userinfo(user_id):
     return render_template("/admin/userinfo.html", userinfo=userinfo, form=form)
 
 
-@admin_login_req
 @admin.route('/interview/<int:user_id>', methods=["GET", "POST"])
 def interview(user_id):
     form = InterviewForm()
@@ -141,8 +136,11 @@ def interview(user_id):
             messages = "账号不存在"
             flash(messages)
             return redirect(url_for("admin.index", messages=messages))
-        account.first_impression = data["first_impression"]
-        account.second_impression = data["second_impression"]
+
+        if data["first_impression"]:
+            account.first_impression = data["first_impression"]
+        if data["second_impression"]:
+            account.second_impression = data["second_impression"]
 
         db.session.commit()
         return redirect(url_for("admin.userinfo", user_id=account.user_id))

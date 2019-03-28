@@ -2,7 +2,7 @@ from flask import Flask, render_template
 from flask_bootstrap import Bootstrap
 from flask_script import Manager
 
-from recruitment.app.exts import db
+from recruitment.app.exts import db, login_manager
 
 from recruitment.app.admin.init import admin
 from recruitment.app.home.init import home
@@ -17,6 +17,9 @@ def create_app():
     app.register_blueprint(admin, url_prefix='/admin')
     app.register_blueprint(home)
 
+    login_manager.init_app(app)
+    login_manager.login_view = "home.login"
+    login_manager.login_message = "你得先登陆哦"
     db.init_app(app)
     return app
 
@@ -26,11 +29,9 @@ db.create_all(app=app)
 app.app_context().push()
 
 bootstrap = Bootstrap(app)
-
 manager = Manager(app)
 
 
 @app.errorhandler(404)
 def page_not_found(error):
     return render_template("home/404.html"), 404
-

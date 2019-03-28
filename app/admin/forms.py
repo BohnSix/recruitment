@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, SelectField, TextAreaField
+from wtforms import StringField, PasswordField, SubmitField, SelectField, TextAreaField, BooleanField
 from wtforms.validators import DataRequired
 
 
@@ -21,6 +21,8 @@ class LoginForm(FlaskForm):
             "placeholder": "请输入密码"
         }
     )
+    remember_me = BooleanField(label="记住我")
+
     submit = SubmitField(
         label="登录",
         render_kw={
@@ -103,12 +105,12 @@ class RegisterForm(FlaskForm):
                                       ('yinxiangshijue', '印象视觉')])
     department2 = SelectField(label="*第一志愿部门",
                               validators=[DataRequired()],
-                              choices=[('wailian', '外联部'),
-                                       ('bangongshi', '办公室'),
-                                       ('mishu', '秘书部'),
-                                       ('tiyu', '体育部'),
-                                       ('chuanmei', '传媒部'),
-                                       ('yinxiangshijue', '印象视觉')])
+                              choices=[('外联部', '外联部'),
+                                       ('办公室', '办公室'),
+                                       ('秘书部', '秘书部'),
+                                       ('体育部', '体育部'),
+                                       ('传媒部', '传媒部'),
+                                       ('印象视觉', '印象视觉')])
 
     intro = TextAreaField(label="*自我介绍",
                           validators=[DataRequired()],

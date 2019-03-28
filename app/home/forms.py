@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, SelectField, TextAreaField
+from wtforms import StringField, PasswordField, SubmitField, SelectField, TextAreaField, BooleanField
 from wtforms.validators import DataRequired, ValidationError
 
 
@@ -20,6 +20,8 @@ class LoginForm(FlaskForm):
             "placeholder": "请输入密码"
         }
     )
+    remember_me = BooleanField(label="记住我")
+
     submit = SubmitField(
         label="登录",
         render_kw={

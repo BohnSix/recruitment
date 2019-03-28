@@ -1,13 +1,20 @@
 import datetime
+from flask_login import UserMixin
 
-from recruitment.app.exts import db
+from recruitment.app.exts import db, login_manager
 
 
-class Admin(db.Model):
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
+
+class Admin(UserMixin, db.Model):
     __tablename__ = "admin"
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     name = db.Column(db.String(32), unique=True)
     pswd = db.Column(db.String(32))
+    remember_me = db.Column(db.Boolean)
 
     def __repr__(self):
         return "<Admin %r>" % self.name
@@ -28,12 +35,13 @@ class Super(Admin):
         return check_password_hash(self.pswd, pswd)
 
 
-class User(db.Model):
+class User(UserMixin, db.Model):
     __tablename__ = "user"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     s_id = db.Column(db.String(32), unique=True, index=True)
     name = db.Column(db.String(32), index=True)
     pswd = db.Column(db.String(255))
+    remember_me = db.Column(db.Boolean)
 
     create_time = db.Column(db.DateTime, default=datetime.datetime.utcnow)
     update_time = db.Column(db.DateTime, default=datetime.datetime.utcnow)
@@ -42,7 +50,7 @@ class User(db.Model):
 
     def __repr__(self):
         return "<User %r>" % self.name
-    
+
     def set_pswd(self, pswd):
         from werkzeug.security import generate_password_hash
         self.pswd = generate_password_hash(pswd)
